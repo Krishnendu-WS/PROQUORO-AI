@@ -1,8 +1,9 @@
 from playwright.sync_api import sync_playwright
+from datetime import datetime,timedelta
  
 with sync_playwright() as p:
     # Launch browser
-    browser = p.chromium.launch(headless=False)
+    browser = p.chromium.launch(headless=False,slow_mo=500)
     page = browser.new_page()
  
     # ── Step 1: Go to login page ───────────────────────────────────────────────
@@ -13,7 +14,7 @@ with sync_playwright() as p:
     page.get_by_text("Securely Login With Email").click()
  
     # Pause
-    # page.pause()
+    page.pause()
 
     #*manual credential entry
     input("Do your manual steps, then press Enter...")
@@ -46,7 +47,10 @@ with sync_playwright() as p:
 
 
     #date
-    page.get_by_role("textbox").nth(5).fill("2026-06-06")
+    next_day = datetime.now()+ timedelta(days=5)
+    next_day = next_day.day
+    page.get_by_role("button", name="Select date").click()
+    page.get_by_role("button", name=str(next_day)).click()
 
 
     #justification
@@ -57,7 +61,25 @@ with sync_playwright() as p:
     page.locator("button").filter(has_text="Search item…").click()
     page.get_by_role("listbox").get_by_text("Cutting Disc 230mm 3mm Variant").click()
 
+
+    #Add item
     page.get_by_role("button", name="Add Item").click()
+
+
+    page.locator("button").filter(has_text="Search item…").click()
+    page.get_by_role("textbox", name="Search item…").fill("ABV")
+    page.get_by_role("option", name="ABV Item (SKU): SHY456 · HSN").click()
+
+    
+    page.get_by_role("button", name="Submit").click()
+
+    #code for new item *****************************************************************
+
+
+    #Submit
+    # page.get_by_role("button", name="Submit").click()
+
+
 
 
  

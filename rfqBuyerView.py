@@ -13,10 +13,10 @@ with sync_playwright() as p:
     page.get_by_text("Securely Login With Email").click()
  
     # Pause
-    # page.pause()
+    page.pause()
 
     #*manual credential entry
-    input("Do your manual steps, then press Enter...")
+    # input("Do your manual steps, then press Enter...")
 
     #Dashboard
     page.get_by_role("button").first.click()
@@ -31,14 +31,15 @@ with sync_playwright() as p:
 
     page.wait_for_load_state("networkidle")
 
-    row = page.locator("tr").filter(has_text="RFQ-2026-00010")
+    row = page.locator("tr").filter(has_text="RFQ-2026-00015")
     row.get_by_role("link", name="View").click()
 
 
-    page.pause()
+    
 
     #confirm
-    # page.get_by_role("button", name="Confirm").click()
+    page.get_by_role("button", name="Confirm").click()
+    page.get_by_role("button",name="Confirm & Generate POs").click()
 
     input("Press Enter to close browser...")
     browser.close()

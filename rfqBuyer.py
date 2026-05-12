@@ -125,7 +125,7 @@ with sync_playwright() as p:
     page.get_by_role("button", name="Next").click()
 
     # page.wait_for_load_state("networkidle")
-    page.pause()
+    # page.pause()
 
     #Item Name
     page.get_by_role("button").filter(has_text=re.compile(r"^$")).nth(2).click()
@@ -161,6 +161,8 @@ with sync_playwright() as p:
     #Next
     page.get_by_role("button", name="Next").click()
 
+    #Publish RFQ
+    page.get_by_role("button", name="Publish RFQ").nth(1).click()
     
 
     input("Press Enter to close browser...")
